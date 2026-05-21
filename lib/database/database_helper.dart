@@ -83,4 +83,16 @@ class DatabaseHelper {
       whereArgs: [id],
     );
   }
+
+  Future<bool> immatriculationExiste(String immat, {int? ignoreId}) async {
+    final db = await database;
+
+    final result = await db.query(
+      'voiture',
+      where: 'immatriculation = ? AND id != ?',
+      whereArgs: [immat, ignoreId ?? -1],
+    );
+
+    return result.isNotEmpty;
+  }
 }
